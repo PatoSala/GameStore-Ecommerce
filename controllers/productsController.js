@@ -43,6 +43,7 @@ const productsController = {
             newProduct.id = uuidv4();
             newProduct.name = req.body.name;
             newProduct.price = req.body.price;
+            newProduct.img = req.body.img;
             newProduct.cat = req.body.cat;
             newProduct.desc = req.body.desc;
         products.push(newProduct);

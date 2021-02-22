@@ -11,5 +11,25 @@
     <%- include ./partials/header %>
 
     <%- include ./partials/mobileHeader %>
+
+    <div class="mainProducts">
+        <ul>
+            <% for (let i = 0; i < products.length; i++) { %>
+                <li>
+                    <div class="box">
+                        <div class="topImg">
+                            <img src="<%= products[i].img %>">
+                        </div>
+                        <div class="preview">
+                            <%= products[i].name %>
+                            <br>
+                            <p class="price">$<%= products[i].price %></p>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+
 </body>
 </html>

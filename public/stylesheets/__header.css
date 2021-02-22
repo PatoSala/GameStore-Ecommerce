@@ -9,7 +9,7 @@ header {
 }
 
 .top {
-    margin-left: 50px;
+    margin-left: 650px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -18,11 +18,6 @@ header {
     background: #EAC926;
     height: 50px;
 };
-
-
-.top .logo {
-    
-}
 
 .top input {
     background: whitesmoke;
@@ -65,13 +60,14 @@ header {
 }
 
 .bot .nav1 a {
-    margin-left: 30px;
+    margin-left: 100px;
     text-decoration: none;
     color: #4e4c4c;
 }
 
 .nav2 {
-    margin-right: 30px;
+    margin-left: 50px;
+    margin-right: 0px;
 }
 
 .bot .nav2 a {

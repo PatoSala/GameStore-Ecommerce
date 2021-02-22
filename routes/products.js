@@ -4,10 +4,11 @@ const { check, validationResult, body } = require('express-validator');
 
 //requerimos el controlador correspondiente a el recurso
 const productsController = require("../controllers/productsController.js");
+const authMiddlewere = require('../middlewares/authMiddleware');
 const opMiddlewere = require('../middlewares/opMiddlewere.js');
 
 //definimos con propiedad del controlador 
-router.get('/list', opMiddlewere, productsController.list);
+router.get('/list', authMiddlewere, opMiddlewere, productsController.list);
 
 router.get('/index', productsController.index);
 
