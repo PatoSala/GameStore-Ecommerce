@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/471bdc5e2e.js" crossorigin="anonymous"></script>
+    <script src="/public/scripts/profile.js"></script>
+    <script>
+        window.addEventListener("load", function() {
+            let logOut = document.querySelector('.logOut');
+
+            logOut.addEventListener("click", function(e) {
+                let r = confirm("Cerrar Sesion?");
+
+                if (r = false) {
+                    e.preventDefault();
+                }
+            })
+        })
+    </script>
+    <title>Tu Perfil</title>
+</head>
+<body>
+
+    <%- include ../partials/header %>
+
+    <%- include ../partials/mobileHeader %>
+
+    <div class="profile">
+        <h1>¡Hola <%= req.session.userLogged.name %>!</h1>
+        <br>
+        <form action="/users/logout" method="POST">
+            <button type="submit" class="logOut">Log Out</button>
+        </form>
+        <form action="/users/cart/<%= req.session.userLogged.id %>" method="GET">
+            <button type="submit">Carrito</button>
+        </form>
+
+        <% if (req.session.userLogged.op == 1) { %>
+            <form action="/products/create" method="GET">
+                <button type="submit">Publicar</button>
+            </form>
+            <form action="/users/list" method="GET">
+                <button type="submit">Listado de usuarios</button>
+            </form>
+            <form action="/products/list" method="GET">
+                <button type="submit">Listado de productos</button>
+            </form>
+        <% } %>
+
+    </div>
+</body>
+</html>
