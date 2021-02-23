@@ -8,7 +8,7 @@ let users = JSON.parse(fs.readFileSync(__dirname + '/../database/users.json'));
 const usersController = {
 
     list: (req, res) => {
-        res.render('users/usersList.ejs', {users});
+        res.render('users/usersList.ejs', { users });
     },
 
     create: (req, res) => {
@@ -17,7 +17,7 @@ const usersController = {
 
     store: (req, res) => {
         let errors = validationResult(req);
-        
+
         if (errors.isEmpty()) {
 
             /* 
@@ -27,29 +27,29 @@ const usersController = {
                     }
                 } 
             */
-    
+
             let newUser = {};
-    
-                newUser.id = uuidv4();
-                newUser.name = req.body.name;
-                newUser.email = req.body.email;
-                newUser.password = bcrypt.hashSync(req.body.password, 10);
-                newUser.op = 0;
-            
+
+            newUser.id = uuidv4();
+            newUser.name = req.body.name;
+            newUser.email = req.body.email;
+            newUser.password = bcrypt.hashSync(req.body.password, 10);
+            newUser.op = 0;
+
             users.push(newUser);
             usersJSON = JSON.stringify(users);
             fs.writeFileSync(__dirname + '/../database/users.json', usersJSON);
             res.redirect('/users/login');
         } else {
-            res.render('users/addUser', {errors: errors.errors});
+            res.render('users/addUser', { errors: errors.errors });
         }
-        
+
     },
 
     edit: (req, res) => {
         let idUser = req.params.id;
         let userFound;
-        
+
         for (let i = 0; i < users.length; i++) {
             if (users[i].id == idUser) {
                 userFound = users[i];
@@ -58,7 +58,7 @@ const usersController = {
         }
 
         if (userFound) {
-            res.render('users/editUser', {userFound});
+            res.render('users/editUser', { userFound });
         } else {
             res.send('Usuario no encontrado!');
         }
@@ -111,29 +111,29 @@ const usersController = {
                     }
                 }
             }
-    
+
             /* if (userLogged == undefined) {
                 res.render('users/login', {errors: 'Email o contraseña incorrectos'});
             }; */
-    
+
             req.session.userLogged = userLogged;
-    
+
             res.redirect('/');
         } else {
-            res.render('users/login', {errors: errors.errors});
+            res.render('users/login', { errors: errors.errors });
         }
     },
 
     cart: (req, res) => {
-        res.render('users/productCart', {req})
+        res.render('users/productCart', { req })
     },
 
     productCart: (req, res) => {
-        
+
     },
 
     show: (req, res) => {
-        res.render('users/profile', {req});
+        res.render('users/profile', { req });
     },
 
     logOut: (req, res) => {

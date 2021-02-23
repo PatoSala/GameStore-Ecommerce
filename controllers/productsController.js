@@ -5,11 +5,11 @@ let products = JSON.parse(fs.readFileSync(__dirname + '/../database/products.jso
 const productsController = {
 
     index: (req, res) => {
-        res.render('products/productsIndex', {products});
+        res.render('products/productsIndex', { products, req });
     },
 
     list: (req, res) => {
-    res.render('products/productsList.ejs', {products});
+        res.render('products/productsList.ejs', { products });
     },
 
     show: (req, res) => {
@@ -26,7 +26,7 @@ const productsController = {
         }
 
         if (productFound) {
-            res.render('products/viewProduct', {productFound});
+            res.render('products/viewProduct', { productFound });
         } else {
             res.send('Producto no encontrado');
         }
@@ -35,17 +35,17 @@ const productsController = {
     },
 
     create: (req, res) => {
-    res.render('products/addProduct');
+        res.render('products/addProduct');
     },
 
-    store: (req, res) => {
+    store: (req, res, next) => {
         let newProduct = {};
-            newProduct.id = uuidv4();
-            newProduct.name = req.body.name;
-            newProduct.price = req.body.price;
-            newProduct.img = req.body.img;
-            newProduct.cat = req.body.cat;
-            newProduct.desc = req.body.desc;
+        newProduct.id = uuidv4();
+        newProduct.name = req.body.name;
+        newProduct.price = req.body.price;
+        newProduct.img = req.files[0].filename;
+        newProduct.cat = req.body.cat;
+        newProduct.desc = req.body.desc;
         products.push(newProduct);
         productsJSON = JSON.stringify(products);
         fs.writeFileSync(__dirname + '/../database/products.json', productsJSON);
@@ -56,7 +56,7 @@ const productsController = {
         let idProduct = req.params.id;
         console.log(idProduct);
         let productFound;
-        
+
         for (let i = 0; i < products.length; i++) {
             if (products[i].id == idProduct) {
                 console.log(products[i].id);
@@ -67,7 +67,7 @@ const productsController = {
         }
 
         if (productFound) {
-            res.render('products/editProduct', {productFound});
+            res.render('products/editProduct', { productFound });
         } else {
             res.send('Producto no encontrado');
         }

@@ -55,10 +55,10 @@
             <ul></ul>
         </div>
 
-        <form action="/products/create" method="POST" class="addProduct">
+        <form action="/products/create" method="POST" class="addProduct" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Nombre del producto" value="" class="name">
             <br>
-            <input type="file" name="img">
+            <input type="file" name="img" class="img">
             <br>
             <input type="text" name="price" placeholder="$$$" value="" class="price">
             <br>

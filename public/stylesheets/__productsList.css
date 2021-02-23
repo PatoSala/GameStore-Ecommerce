@@ -1,0 +1,18 @@
+.productsList {
+    background-color: #f0efef;
+}
+
+.productsList .list-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1000px;
+    height: 150px;
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px grey;
+}
+
+.productsList .list-box:hover {
+    box-shadow: inset 1px 1px 1px grey;
+}

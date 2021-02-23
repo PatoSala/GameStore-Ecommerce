@@ -1,6 +1,20 @@
 const express = require('express');
 const router = express.Router(); 
 const { check, validationResult, body } = require('express-validator');
+const path = require('path');
+const multer = require('multer');
+let storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'tmp/my-uploads');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+});
+
+let upload = multer({storage: storage});
+
+
 
 //requerimos el controlador correspondiente a el recurso
 const productsController = require("../controllers/productsController.js");
@@ -18,7 +32,8 @@ router.get('/create', productsController.create);
 router.post('/create', [
     check('name').isLength( {min: 5} ).withMessage("Ponele un nombre a tu producto"),
     check('price').isInt(),
-], productsController.store);
+], 
+upload.any(), productsController.store);
 
 router.get('/edit/:id', productsController.edit);
 router.post('/edit/:id', productsController.update);

@@ -5,7 +5,12 @@
 @import '__register.css';
 @import '__usersList.css';
 @import '__profile.css';
+@import '__productsList.css';
+@import '__addProduct.css';
 
+body {
+    background-color: #f0efef;
+}
 
 ul {
     list-style-type: none;
