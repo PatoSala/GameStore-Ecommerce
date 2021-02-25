@@ -24,10 +24,17 @@
             margin-top: 10px;
         }
         
+        @media screen and (max-width: 1290px) and (min-width: 627px) {
+            .carousel-inner>.item>img,
+            .carousel-inner>.item>a>img {
+                height: 400px;
+            }
+        }
+        
         @media screen and (max-width: 768px) {
             .carousel-inner>.item>img,
             .carousel-inner>.item>a>img {
-                height: 200px;
+                height: 300px;
             }
         }
     </style>
@@ -67,7 +74,7 @@
                     <li>
                         <div class="box">
                             <div class="topImg">
-                                <img src="/tmp/my-uploads/<%= products[i].img %>">
+                                <img src="/tmp/my-uploads/<%= products[i].img %>" style='height: 100%; width: 100%; object-fit: contain'>
                             </div>
                             <div class="preview">
                                 <%= products[i].name %>
@@ -81,6 +88,16 @@
                     <% } %>
             </ul>
         </div>
+
+        <form class="view-more" action="/products/index" method="GET">
+            <button type="submit">Ver más</button>
+        </form>
+
+        <br>
+
+        <footer>
+            <p>Contact Us</p>
+        </footer>
 
 </body>
 

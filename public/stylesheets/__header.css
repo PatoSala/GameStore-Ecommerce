@@ -1,5 +1,5 @@
 header {
-    
+    z-index: 11;
 }
 
 div.nav-bar {
@@ -8,13 +8,13 @@ div.nav-bar {
     justify-content: space-around;
     align-items: center;
     background-color: #47484d;
+    height: 64px;
 }
 
 div.nav-bar .bot ul.nav1 {
     display: flex;
     justify-content: space-around;
     width: 110%;
-    
     letter-spacing: 3px;
     font-weight: bold;
     font-size: 14px;
@@ -61,23 +61,18 @@ div.nav-bar .search-bar button:hover {
 
 .mobile-links {
     display: none;
-    
 }
 
 @media screen and (max-width: 768px) {
-
     body {
         overflow-x: hidden;
     }
-
     div.nav-bar .bot ul.nav1 {
         display: none;
     }
-
     .search-bar {
         display: none;
     }
-
     .mobile-links {
         z-index: 16;
         position: absolute;
@@ -94,23 +89,15 @@ div.nav-bar .search-bar button:hover {
         display: flex;
         justify-content: space-around;
         width: 110%;
-        
         letter-spacing: 3px;
         font-weight: bold;
         font-size: 14px;
     }
-
     .mobile-links li a {
         text-decoration: none;
         color: #e7e7e7;
     }
-
     .burger {
         display: block;
-        
     }
-
 }
-
-
-
