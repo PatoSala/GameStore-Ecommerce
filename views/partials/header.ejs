@@ -1,0 +1,72 @@
+<header class="desktop">
+    <div class="nav-bar">
+        <a href="/" class="logo">
+            <img src="/../images/logo/gamstore.png" width="180px" height="50px">
+        </a>
+
+        <div class="bot">
+    
+            <ul class="nav1">
+                    <li><a href="/products/index">Produtos</a></li>
+                    <li><a href="url">Ayuda</a></li>
+                <% if (req.session.userLogged != undefined) { %>
+                    <li><a href="/users/<%= req.session.userLogged.id %>">Perfil</a></li>
+                    <li><a href="/users/cart/<%= req.session.userLogged.id %>">Carrito</a></li>  
+                <% } else { %>
+                    <li><a href="/users/register">Creá tu cuenta</a></li>
+                    <li><a href="/users/login">Ingresá</a></li>
+                    <li><a href="/users/cart/:id">Mis compras</a></li>
+                <% } %>
+            </ul>
+
+            <ul class="mobile-links">
+                    <li><a href="/products/index">Produtos</a></li>
+                    <li><a href="url">Ayuda</a></li>
+                <% if (req.session.userLogged != undefined) { %>
+                    <li><a href="/users/<%= req.session.userLogged.id %>">Perfil</a></li>
+                    <li><a href="/users/cart/<%= req.session.userLogged.id %>">Carrito</a></li>  
+                <% } else { %>
+                    <li><a href="/users/register">Creá tu cuenta</a></li>
+                    <li><a href="/users/login">Ingresá</a></li>
+                    <li><a href="/users/cart/:id">Mis compras</a></li>
+                <% } %>
+            </ul>
+    
+        </div>
+
+        <form class="search-bar">
+            <input type="search" placeholder="Buscar">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+
+    </div>
+    <script>
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.mobile-links');
+
+            let count = 0;
+
+            burger.addEventListener("click", () => {
+                if (count == 0) {
+                    nav.style.transform = "translateX(0%)";
+                    count = 1;
+                } else {
+                    nav.style.transform = "translateX(100%)";
+                    count = 0;
+                }
+            });
+
+            
+        }
+
+        navSlide();
+    </script>
+
+</header>

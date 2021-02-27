@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+    <script>        
+        window.addEventListener("load", function() {
+            let form = document.querySelector("form.addProduct");
+            let errors = [];
+
+            form.addEventListener("submit", function(e) {
+                
+                let productName = document.querySelector("input.name");
+                let productPrice = document.querySelector("input.price");
+                let productCat = document.querySelector("input.cat");
+                let productDesc = document.querySelector("input.desc");
+
+                if (productName.value == "") {
+                    productName.style.borderColor = "#a01919";
+                    productName.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
+
+                if (productPrice.value == "") {
+                    productPrice.style.borderColor = "#a01919";
+                    productPrice.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
+
+                if (productCat.value == "") {
+                    productCat.style.borderColor = "#a01919";
+                    productCat.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
+
+                if (productDesc.value == "") {
+                    productDesc.style.borderColor = "#a01919";
+                    productDesc.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
+            })
+            
+        })
+    </script>
+    <title>Add Product</title>
+</head>
+
+<body>
+    <div class="addProduct">
+        <h1>Añadir producto</h1>
+
+        <div class="errors">
+            <ul></ul>
+        </div>
+
+        <form action="/products/create" method="POST" class="addProduct" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Nombre del producto" value="" class="name">
+            <br>
+            <input type="file" name="img" class="img">
+            <br>
+            <input type="text" name="price" placeholder="$$$" value="" class="price">
+            <br>
+            <input type="text" name="cat" placeholder="Categoría" value="" class="cat">
+            <br>
+            <input type="text" name="desc" placeholder="Decripción del producto" value="" class="desc">
+            <br>
+            <button type="submit" class="submit">Añadir</button>
+        </form>
+    </div>
+</body>
+</html>
