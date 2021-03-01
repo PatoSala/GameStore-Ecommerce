@@ -22,12 +22,40 @@
 }
 
 div.product-index div.filter {
+    pointer-events: none;
     margin-top: 30px;
     margin-left: 10px;
     width: 250px;
     height: 600px;
     background-color: teal;
     border-radius: 3px;
+    color: #f0efef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.filter p {
+    pointer-events: all;
+    margin: 0%;
+    text-decoration: none;
+    color: #f0efef;
+}
+
+div.cat {
+    background-color: teal;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 200px;
+}
+
+div.cat a {
+    display: flex;
+    text-decoration: none;
+    color: #f0efef;
+    justify-content: space-around;
 }
 
 @media screen and (max-width: 768px) {
@@ -35,6 +63,7 @@ div.product-index div.filter {
         display: block;
     }
     div.product-index div.filter {
+        pointer-events: all;
         margin-top: 30px;
         margin-left: 10px;
         width: 100%;
@@ -48,4 +77,22 @@ div.product-index div.filter {
         border-bottom-left-radius: 3px;
         z-index: 10;
     }
+
+    div.product-index div.filter {
+        display: flex;
+        cursor: pointer;
+        color: #f0efef;
+        align-items: center;
+        justify-content: center;
+    }
+
+    div.product-index div.filter p.Juegos, p.Desktop, p.Periféricos, p.Laptops, p.Componentes {
+        display: none;
+    }
+
+    div.cat {
+        transition: 1s;
+        
+    }
 }
+

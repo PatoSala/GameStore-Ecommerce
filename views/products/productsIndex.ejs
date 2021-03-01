@@ -15,16 +15,30 @@
 
         <div class="product-index">
             <div class="filter">
-                filtros
+                <p style="margin: 0%;">Filtrar por Categorías</p>
+                <p class="Juegos">Juegos</p>
+                <p class="Desktop">Desktop</p>
+                <p class="Periféricos">Periféricos</p>
+                <p class="Laptops">Laptops</p>
+                <p class="Componentes">Componentes</p>
+            </div>
+
+            <div class="cat">
+                <a href="">Juegos</a>
+                <a href="">PCs de Escritorio</a>
+                <a href="">Periféricos</a>
+                <a href="">Laptops</a>
+                <a href="">Componentes</a>
             </div>
 
             <div class="mainProducts">
                 <ul>
                     <% for (let i = 0; i < products.length; i++) { %>
+                        <% console.log(i) %>
                         <li>
-                            <div class="box">
+                            <div class="box" id="<%= products[i].cat %>">
                                 <div class="topImg">
-                                    <img src="/tmp/my-uploads/<%= products[i].img %>">
+                                    <img src="/../../../tmp/my-uploads/<%= products[i].img %>">
                                 </div>
                                 <div class="preview">
                                     <%= products[i].name %>
@@ -43,6 +57,65 @@
 
         </div>
 
+        <%- include ../partials/footer %>
+
+    <script>
+        const catSlide = () => {
+            const filter = document.querySelector("div.filter");
+            const categories = document.querySelector("div.cat");
+            let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
+            let count = 0;
+            console.log(count);
+            filter.addEventListener("click", () => {
+                
+                if (count == 0 && viewportWidth <= 768) {
+                    categories.style.display = "flex";
+                    count = 1;
+                } else {
+                    categories.style.display = "none";
+                    count = 0;
+                }
+            });
+
+            
+        }
+
+        catSlide();
+
+        //footer fix
+
+        const footer = document.querySelector("footer");
+
+        footer.style.position = "unset";
+
+        //
+
+        let Juegos = document.querySelector("p.Juegos");
+        let Desktop = document.querySelector("p.Desktop");
+        let Periféricos = document.querySelector("p.Periféricos");
+        let Laptops = document.querySelector("p.Laptops");
+        let Componentes = document.querySelector("p.Componentes");
+
+        let catJuegos = document.querySelector("#Juegos");
+        let catDesktop = document.querySelector("#Desktop");
+        let catPeriféricos = document.querySelector("#Periféricos");
+        let catLaptops = document.querySelector("#Laptops");
+        let catComponentes = document.querySelector("#Componentes");
+        catComponentes.style.display = "none";
+        catJuegos.style.display = "none";
+        catLaptops.style.display = "none";
+        catDesktop.style.display = "none";
+        catPeriféricos.style.display = "none";
+
+        Juegos.addEventListener("click", function() {
+            catDesktop.style.display = "none";
+            catPeriféricos.style.display = "none";
+            catLaptops.style.display = "none";
+            catComponentes.style.display = "none";
+        });
+
+    </script>
 </body>
 
 </html>

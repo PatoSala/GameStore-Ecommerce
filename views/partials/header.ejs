@@ -52,17 +52,20 @@
             const nav = document.querySelector('.mobile-links');
 
             let count = 0;
+            
 
             burger.addEventListener("click", () => {
                 if (count == 0) {
                     nav.style.transform = "translateX(0%)";
                     count = 1;
+                    
                 } else {
                     nav.style.transform = "translateX(100%)";
                     count = 0;
                 }
             });
 
+            
             
         }
 

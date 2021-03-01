@@ -9,7 +9,7 @@ const productsController = {
     },
 
     list: (req, res) => {
-        res.render('products/productsList.ejs', { products });
+        res.render('products/productsList.ejs', { products, req });
     },
 
     show: (req, res) => {
@@ -35,7 +35,7 @@ const productsController = {
     },
 
     create: (req, res) => {
-        res.render('products/addProduct');
+        res.render('products/addProduct', {req});
     },
 
     store: (req, res, next) => {

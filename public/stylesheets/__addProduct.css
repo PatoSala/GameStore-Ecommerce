@@ -43,3 +43,13 @@
 .addProduct form.addProduct button:hover {
     background: #0833aa;
 }
+
+.addProduct form.addProduct div.radio {
+    display: flex;
+    align-items: center;
+}
+
+.addProduct form.addProduct input.cat {
+   width: 20px;
+   height: 20px;
+}

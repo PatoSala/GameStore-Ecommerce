@@ -37,7 +37,18 @@
                 height: 300px;
             }
         }
+
+
     </style>
+
+    <script>
+        window.addEventListener("load", function() {
+            const footer = document.querySelector("footer");
+
+            footer.style.position = "unset";
+        })
+    </script>
+
 </head>
 
 <body>
@@ -95,9 +106,7 @@
 
         <br>
 
-        <footer>
-            <p>Contact Us</p>
-        </footer>
+        <%- include ./partials/footer %>
 
 </body>
 
