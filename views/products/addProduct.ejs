@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <script>        
+    <script>
         window.addEventListener("load", function() {
             let form = document.querySelector("form.addProduct");
             let errors = [];
 
             form.addEventListener("submit", function(e) {
-                
+
                 let productName = document.querySelector("input.name");
                 let productPrice = document.querySelector("input.price");
                 let productCat = document.querySelector("input.cat");
@@ -45,7 +46,7 @@
             const footer = document.querySelector("footer");
 
             footer.style.position = "unset";
-            
+
         })
     </script>
     <title>Add Product</title>
@@ -55,35 +56,36 @@
 
     <%- include ../partials/header.ejs %>
 
-    <div class="addProduct">
-        <h1>Añadir producto</h1>
+        <div class="addProduct">
+            <h1>Añadir producto</h1>
 
-        <div class="errors">
-            <ul></ul>
+            <div class="errors">
+                <ul></ul>
+            </div>
+
+            <form action="/products/create" method="POST" class="addProduct" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Nombre del producto" value="" class="name">
+                <br>
+                <input type="file" name="img" class="img">
+                <br>
+                <input type="text" name="price" placeholder="$$$" value="" class="price">
+                <br>
+                <div class="radio" style="margin: 0%;">
+                    <input type="radio" name="cat" placeholder="Categoría" value="3" class="cat"> Juegos
+                    <input type="radio" name="cat" placeholder="Categoría" value="6" class="cat"> Desktop
+                    <input type="radio" name="cat" placeholder="Categoría" value="1" class="cat"> Periféricos
+                    <input type="radio" name="cat" placeholder="Categoría" value="7" class="cat"> Laptops
+                    <input type="radio" name="cat" placeholder="Categoría" value="8" class="cat"> Componentes
+                </div>
+                <br>
+                <textarea name="desc" placeholder="Decripción del producto" value="" class="desc"></textarea>
+                <br>
+                <button type="submit" class="submit">Añadir</button>
+            </form>
         </div>
 
-        <form action="/products/create" method="POST" class="addProduct" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Nombre del producto" value="" class="name">
-            <br>
-            <input type="file" name="img" class="img">
-            <br>
-            <input type="text" name="price" placeholder="$$$" value="" class="price">
-            <br>
-            <div class="radio" style="margin: 0%;">
-                <input type="radio" name="cat" placeholder="Categoría" value="Juegos" class="cat"> Juegos
-                <input type="radio" name="cat" placeholder="Categoría" value="Desktop" class="cat"> Desktop
-                <input type="radio" name="cat" placeholder="Categoría" value="Periféricos" class="cat"> Periféricos
-                <input type="radio" name="cat" placeholder="Categoría" value="Laptops" class="cat"> Laptops
-                <input type="radio" name="cat" placeholder="Categoría" value="Componentes" class="cat"> Componentes
-            </div>
-            <br>
-            <input type="text" name="desc" placeholder="Decripción del producto" value="" class="desc">
-            <br>
-            <button type="submit" class="submit">Añadir</button>
-        </form>
-    </div>
-
-    <%- include ../partials/footer %>
+        <%- include ../partials/footer %>
 
 </body>
+
 </html>

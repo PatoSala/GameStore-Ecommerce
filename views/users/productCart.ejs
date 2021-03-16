@@ -1,16 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <title>Carrito</title>
-</head>
-<body>
-    <h1>Carrito de <%= req.session.userLogged.name %></h1>
+    <script src="https://kit.fontawesome.com/471bdc5e2e.js" crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener('load', function() {
 
-    <%- include ../partials/footer %>
+
+
+            function totalPrice() {
+
+            }
+
+        })
+    </script>
+</head>
+
+<body>
+
+    <%- include ../partials/header %>
+
+        <div class="carrito">
+            <h1>Carrito de
+                <%= req.session.userLogged.name %>
+            </h1>
+
+            <% for (let i = 0; i < userCart.length; i++) { %>
+                <div class="cartBox">
+                    <img src="/images/products/<%= userCart[i].image %>" />
+                    <div class="product-cart-content">
+                        <p>
+                            <%= userCart[i].name %>
+                        </p>
+                        <p class="cart-product-price">
+                            $
+                            <%= userCart[i].price %>
+                        </p>
+
+                        <form action="/products/cart/delete/<%= userCart[i].id %>" method="POST" class="delete-from-cart">
+                            <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+
+                    </div>
+                </div>
+                <% } %>
+
+
+                    <div class="total-amount">
+                        <p>Total: $
+                            <%= totalPrice %>
+                        </p>
+                        <form action="/products/cart/buy" method="GET">
+                            <button type="submit">Comprar</button>
+                        </form>
+                    </div>
+
+        </div>
+
+        <%- include ../partials/footer %>
 
 </body>
+
 </html>

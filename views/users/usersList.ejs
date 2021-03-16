@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,44 +8,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <title>Users</title>
 </head>
+
 <body>
 
-    <div class="usersList">
-        <header>
-            <a href="/"><img class="logo" src="/../images/logo/gamstore.png" width="134px" height="34px"></a>
-        </header>
-    
-        <h1>Lista de usuarios registrados:</h1>
-    
-        <ul>
-            <% for (let i = 0; i < users.length; i++ ) { %> 
-                <li>
-                    id: <%= users[i].id %>
-                    <br>
-                    Nombre: <%= users[i].name %>
-                    <br>
-                    Email: <%= users[i].email %>
-                    <br>
-                    Administrador: 
-                        <% if (users[i].op == 1) { %> 
-                            Si
-                        <% } else { %>
-                            No
-                        <% } %>
-                    <br>
-                    <form method="GET" action="/users/edit/<%= users[i].id %>">
-                        <button type="submit">Edit</button>
-                    </form>
-                    <form method="POST" action="/users/delete/<%= users[i].id %>">
-                        <button type="submit">Delete</button>
-                    </form>
-                </li>
-                <br>
-            <% } %>
-        </ul>
-    </div>
+    <%- include ../partials/header %>
+        <div class="usersList">
 
-    <%- include ../partials/footer %>
+
+            <h1>Lista de usuarios registrados:</h1>
+
+            <ul>
+                <% for (let i = 0; i < users.length; i++ ) { %>
+                    <li>
+                        id:
+                        <%= users[i].id %>
+                            <br> Nombre:
+                            <%= users[i].name %>
+                                <br> Email:
+                                <%= users[i].email %>
+                                    <br> Administrador:
+                                    <% if (users[i].op == 1) { %>
+                                        Si
+                                        <% } else { %>
+                                            No
+                                            <% } %>
+                                                <br>
+                                                <form method="GET" action="/users/edit/<%= users[i].id %>">
+                                                    <button type="submit">Edit</button>
+                                                </form>
+                                                <form method="POST" action="/users/delete/<%= users[i].id %>">
+                                                    <button type="submit">Delete</button>
+                                                </form>
+                    </li>
+                    <br>
+                    <% } %>
+            </ul>
+        </div>
+
+        <%- include ../partials/footer %>
 
 </body>
+
 </html>

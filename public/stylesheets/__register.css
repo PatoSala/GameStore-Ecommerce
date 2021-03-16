@@ -57,6 +57,7 @@
     border-style: solid;
     color: white;
 }
+
 .registerForm button:hover {
     background: #0833aa;
 }
@@ -82,7 +83,18 @@
 .registerContainer .errors p {
     text-align: left;
     margin: 5px;
-    
+}
+
+.registerForm .errores {
+    display: none;
+    width: 400px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #a01919;
+    border-radius: 3px;
+    color: #a01919;
+    background: #f06f6f;
+    margin-bottom: 0px;
 }
 
 @media screen and (max-width: 768px) {

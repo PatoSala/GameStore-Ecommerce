@@ -18,3 +18,8 @@ div.profile form button {
 div.profile button:hover {
     background: #0833aa;
 }
+
+.profile footer {
+    position: absolute;
+    bottom: 0;
+}

@@ -1,99 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <script>
-      window.addEventListener("load", function() {
-        let errores = [];
-        let form = document.querySelector("form.registration");
+        window.addEventListener("load", function() {
+            let errores = [];
+            let form = document.querySelector("form.registration");
 
-        form.addEventListener("submit", function(e) {
-          let userName = document.querySelector("input.name");
-          let userEmail = document.querySelector("input.email");
-          let userPassword = document.querySelector("input.password");
-          let confirmPassword = document.querySelector("input.confirm");
+            form.addEventListener("submit", function(e) {
+                let userName = document.querySelector("input.name");
+                let userEmail = document.querySelector("input.email");
+                let userPassword = document.querySelector("input.password");
+                let confirmPassword = document.querySelector("input.confirm");
+                let erroresBox = document.querySelector("div.errores");
 
-          if (userName.value == "") {
-            errores.push("El campo nombre es obligatorio");
-            userName.style.borderColor = "#a01919";
-            userName.style.backgroundColor = "#f06f6f";
-            e.preventDefault();
-          }
+                if (userName.value == "") {
+                    errores.push("El campo nombre es obligatorio");
+                    userName.style.borderColor = "#a01919";
+                    userName.style.backgroundColor = "#f06f6f";
+                    erroresBox.style.display = "block";
+                    e.preventDefault();
+                }
 
-          if (userEmail.value == "") {
-            errores.push("El campo email es obliatorio");
-            userEmail.style.borderColor = "#a01919";
-            userEmail.style.backgroundColor = "#f06f6f";
-            e.preventDefault();
-          }
+                if (userEmail.value == "") {
+                    errores.push("El campo email es obliatorio");
+                    userEmail.style.borderColor = "#a01919";
+                    userEmail.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
 
-          if (userPassword.value == "") {
-            userPassword.style.borderColor = "#a01919";
-            userPassword.style.backgroundColor = "#f06f6f";
-            e.preventDefault();
-          }
+                if (userPassword.value == "") {
+                    errores.push("El campo contraseña es obligatorio");
+                    userPassword.style.borderColor = "#a01919";
+                    userPassword.style.backgroundColor = "#f06f6f";
+                    e.preventDefault();
+                }
+
+                console.log(errores);
+            })
         })
-      })
     </script>
     <title>Regístrate</title>
 </head>
+
 <body>
     <div class="registerForm">
 
-      <header>
-        <a href="/"><img class="logo" src="/../images/logo/gamstore.png" width="134px" height="34px"></a>
-      </header>
+        <header>
+            <a href="/"><img class="logo" src="/../images/logo/gamstore.png" width="134px" height="34px"></a>
+        </header>
 
-      <div class="registerContainer">
-        <h1>Registrarse</h1>
+        <div class="registerContainer">
+            <h1>Registrarse</h1>
 
-        <dic class="errores">
-          <ul></ul>
-        </dic>
+            <dic class="errores">
+                <ul></ul>
+            </dic>
 
-      
-        <% if (typeof errors != "undefined") { %> 
-          <div class="errors">
-            <ul>
-              <% for (let i = 0; i < errors.length; i++) { %> 
-                  <li><p><%= errors[i].msg%></p></li>
-              <% } %>
-            </ul>
-          </div>
-        <% } %>
-      
 
-      <form method="POST" action="/users/register" class="registration">
-          <input type="text" name="name" placeholder="Nombre de usuario" value="" class="name">
-          <br>
-          <input type="email" name="email" placeholder="Email" value="" class="email">
-          <br>
-          <input type="password" name="password" placeholder="Contraseña" value="" id="myInput" class="password">
-          <br>
-          <input type="checkbox" onclick="myFunction()" class="checkbox">Mostrar Contraseña
-          <script>
-              function myFunction() {
-              var x = document.getElementById("myInput");
-              if (x.type === "password") {
-                x.type = "text";
-              } else {
-                x.type = "password";
-              }
-            }
-          </script>
-          <br>
-          <button type="submit">Registrarse</button>
-          <br>
-          <p><a href="/users/login">Ya tenés cuenta? Iniciá sesión acá</a></p>
-      </form>
-      </div>
+            <% if (typeof errors != "undefined") { %>
+                <div class="errors">
+                    <ul>
+                        <% for (let i = 0; i < errors.length; i++) { %>
+                            <li>
+                                <p>
+                                    <%= errors[i].msg%>
+                                </p>
+                            </li>
+                            <% } %>
+                    </ul>
+                </div>
+                <% } %>
+
+
+                    <form method="POST" action="/users/register" class="registration">
+                        <input type="text" name="name" placeholder="Nombre de usuario" value="" class="name">
+                        <br>
+                        <input type="email" name="email" placeholder="Email" value="" class="email">
+                        <br>
+                        <input type="password" name="password" placeholder="Contraseña" value="" id="myInput" class="password">
+                        <br>
+                        <input type="checkbox" onclick="myFunction()" class="checkbox">Mostrar Contraseña
+                        <script>
+                            function myFunction() {
+                                var x = document.getElementById("myInput");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                        </script>
+                        <br>
+                        <button type="submit">Registrarse</button>
+                        <br>
+                        <p><a href="/users/login">Ya tenés cuenta? Iniciá sesión acá</a></p>
+                    </form>
+        </div>
 
     </div>
 
     <%- include ../partials/footer %>
 
 </body>
+
 </html>

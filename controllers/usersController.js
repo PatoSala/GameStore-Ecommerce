@@ -1,14 +1,21 @@
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const db = require('../database/models');
 const { validationResult } = require('express-validator');
-let users = JSON.parse(fs.readFileSync(__dirname + '/../database/users.json'));
+/* let users = JSON.parse(fs.readFileSync(__dirname + '/../database/users.json')); */
+let carts = JSON.parse(fs.readFileSync(__dirname + '/../database/cart.json'));
 
 
 const usersController = {
 
     list: (req, res) => {
-        res.render('users/usersList.ejs', { users });
+        db.Users.findAll()
+            .then(function(users) {
+                if (users) {
+                    return res.render('users/usersList.ejs', { users, req });
+                }
+            })
     },
 
     create: (req, res) => {
@@ -20,6 +27,16 @@ const usersController = {
 
         if (errors.isEmpty()) {
 
+            let newUser = {};
+
+            newUser.name = req.body.name;
+            newUser.email = req.body.email;
+            newUser.password = bcrypt.hashSync(req.body.password, 10);
+            newUser.op = 0;
+
+            db.Users.create(newUser);
+            res.redirect('/users/login');
+
             /* 
                 for (let i = 0; i < users.length; i++) {
                     if (users[i].email == req.body.email) {
@@ -28,7 +45,8 @@ const usersController = {
                 } 
             */
 
-            let newUser = {};
+            /* let newUser = {};
+            let newCart = {};
 
             newUser.id = uuidv4();
             newUser.name = req.body.name;
@@ -36,61 +54,75 @@ const usersController = {
             newUser.password = bcrypt.hashSync(req.body.password, 10);
             newUser.op = 0;
 
+            newCart.id = uuidv4();
+            newUser.cart = newCart.id;
+            newCart.owner = newUser.id;
+            newCart.products = [];
+            carts.push(newCart);
+            cartJSON = JSON.stringify(carts);
+            fs.writeFileSync(__dirname + '/../database/cart.json', cartJSON);
+
             users.push(newUser);
             usersJSON = JSON.stringify(users);
             fs.writeFileSync(__dirname + '/../database/users.json', usersJSON);
             res.redirect('/users/login');
+
+                */
+
         } else {
             res.render('users/addUser', { errors: errors.errors });
         }
+
 
     },
 
     edit: (req, res) => {
         let idUser = req.params.id;
-        let userFound;
+        console.log(idUser);
 
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].id == idUser) {
-                userFound = users[i];
-                break;
-            }
-        }
-
-        if (userFound) {
-            res.render('users/editUser', { userFound });
-        } else {
-            res.send('Usuario no encontrado!');
-        }
+        db.Users.findOne({
+                where: {
+                    id: idUser,
+                }
+            })
+            .then(function(user) {
+                if (user) {
+                    res.render('users/editUser', { user, req });
+                } else {
+                    res.send('Usuario no encontrado!');
+                }
+            })
     },
 
     update: (req, res) => {
         let idUser = req.params.id;
+        let userUpdate = {};
+        userUpdate.name = req.body.name;
+        userUpdate.email = req.body.email;
 
-        let editUser = users.map(function(user) {
-            if (user.id == idUser) {
-                let userEdit = req.body;
-                userEdit.password = bcrypt.hashSync(req.body.password, 10);
-                userEdit.id = idUser;
-                return userEdit;
-            }
-            return user;
-        });
-        editUserJSON = JSON.stringify(editUser);
-        fs.writeFileSync(__dirname + '/../database/users.json', editUserJSON);
-        res.send('Usuario editado!');
+        db.Users.update(
+            userUpdate, {
+                where: {
+                    id: idUser,
+                }
+            });
+
+        res.redirect('/');
     },
 
     delete: (req, res) => {
         let idUser = req.params.id;
 
-        let deleteUser = users.filter(function(user) {
-            return user.id != idUser;
-        });
-
-        deleteUserJSON = JSON.stringify(deleteUser);
-        fs.writeFileSync(__dirname + '/../database/users.json', deleteUserJSON);
-        res.redirect('/');
+        db.Users.destroy({
+                where: {
+                    id: idUser,
+                }
+            })
+            .then(function(x) {
+                if (x) {
+                    res.redirect('/');
+                }
+            })
     },
 
     loginForm: (req, res) => {
@@ -101,35 +133,52 @@ const usersController = {
         let errors = validationResult(req);
 
         if (errors.isEmpty()) {
-            for (let i = 0; i < users.length; i++) {
-                if (users[i].email == req.body.email) {
-                    if (bcrypt.compareSync(req.body.password, users[i].password)) {
-                        var userLogged = users[i];
-                        exports.userLogged = userLogged;
-                        console.log(users[i]);
-                        break;
+            db.Users.findOne({
+                    where: {
+                        email: req.body.email,
                     }
-                }
-            }
+                })
+                .then(function(user) {
+                    if (bcrypt.compareSync(req.body.password, user.password)) {
+                        req.session.userLogged = user;
 
-            /* if (userLogged == undefined) {
-                res.render('users/login', {errors: 'Email o contraseña incorrectos'});
-            }; */
+                        if (req.body.checbox != undefined) {
+                            res.cookie('remember', user.email, {
+                                maxAge: 60000
+                            })
+                        }
 
-            req.session.userLogged = userLogged;
+                        return res.redirect('/');
+                    } else {
+                        return res.render('users/login', { errors: errors.errors });
+                    }
+                });
 
-            res.redirect('/');
         } else {
             res.render('users/login', { errors: errors.errors });
         }
+
     },
 
     cart: (req, res) => {
-        res.render('users/productCart', { req })
-    },
+        idUser = req.session.userLogged.id;
 
-    productCart: (req, res) => {
-
+        db.Products.findAll({
+                include: [{
+                    association: 'carritos',
+                    where: {
+                        id_user: idUser,
+                        status: 1,
+                    }
+                }]
+            })
+            .then(function(userCart) {
+                let totalPrice = 0;
+                for (let i = 0; i < userCart.length; i++) {
+                    totalPrice = totalPrice + userCart[i].price
+                }
+                return res.render('users/productCart', { req, userCart, totalPrice })
+            })
     },
 
     show: (req, res) => {

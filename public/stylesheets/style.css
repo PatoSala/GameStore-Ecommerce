@@ -8,6 +8,11 @@
 @import '__productsList.css';
 @import '__addProduct.css';
 @import '__footer.css';
+@import '__editUSer.css';
+@import '__viewProduct.css';
+@import '__editProduct.css';
+@import '__cart.css';
+@import '__compra.css';
 body {
     background-color: #f0efef;
 }

@@ -1,111 +1,169 @@
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
-let products = JSON.parse(fs.readFileSync(__dirname + '/../database/products.json'));
+const db = require('../database/models');
+const multer = require('multer');
+const { pathToFileURL } = require('url');
+let path = require('path');
+const { check, validationResult } = require('express-validator/check');
+//let products = JSON.parse(fs.readFileSync(__dirname + '/../database/products.json'));
 
 const productsController = {
 
     index: (req, res) => {
-        res.render('products/productsIndex', { products, req });
+
+        db.Products.findAll()
+            .then(function(allProducts) {
+                let products = allProducts;
+                console.log(products);
+                res.render('products/productsIndex.ejs', { products, req });
+            })
+
+    },
+
+    indexCat: (req, res) => {
+        let categoryId = req.params.id;
+        console.log(categoryId);
+
+        db.Products.findAll({
+                where: {
+                    category_id: categoryId,
+                }
+            })
+            .then(function(categoryProduct) {
+                let products = categoryProduct;
+                res.render('products/productsIndex.ejs', { products, req });
+            })
     },
 
     list: (req, res) => {
-        res.render('products/productsList.ejs', { products, req });
+
+        db.Products.findAll()
+            .then(function(allProducts) {
+                let products = allProducts;
+                res.render('products/productsList.ejs', { products, req });
+            })
+
     },
 
     show: (req, res) => {
         let idProduct = req.params.id;
         console.log(idProduct);
-        let productFound;
 
-        for (let i = 0; i < products.length; i++) {
+
+        /* for (let i = 0; i < products.length; i++) {
             if (products[i].id == idProduct) {
                 productFound = products[i];
                 console.log(productFound);
                 break;
             }
-        }
+        } */
 
-        if (productFound) {
-            res.render('products/viewProduct', { productFound });
-        } else {
-            res.send('Producto no encontrado');
-        }
+        db.Products.findOne({
+                where: {
+                    id: idProduct,
+                }
+            })
+            .then(function(productFound) {
+                if (productFound) {
+                    return res.render('products/viewProduct', { productFound, req });
+                } else {
+                    return res.send('Producto no encontrado');
+                }
+            })
 
-        console.log(productFound);
     },
 
     create: (req, res) => {
-        res.render('products/addProduct', {req});
+        res.render('products/addProduct', { req });
     },
 
     store: (req, res, next) => {
         let newProduct = {};
-        newProduct.id = uuidv4();
         newProduct.name = req.body.name;
         newProduct.price = req.body.price;
-        newProduct.img = req.files[0].filename;
-        newProduct.cat = req.body.cat;
-        newProduct.desc = req.body.desc;
-        products.push(newProduct);
+        newProduct.category_id = req.body.cat;
+        newProduct.description = req.body.desc;
+        newProduct.image = req.files[0].filename;
+
+        console.log(req.files);
+
+
+        db.Products.create(newProduct)
+            .then(function(product) {
+                return res.redirect('/products/list');
+            }).catch(function(error) {
+                return res.send(error);
+            })
+
+        /* products.push(newProduct);
         productsJSON = JSON.stringify(products);
-        fs.writeFileSync(__dirname + '/../database/products.json', productsJSON);
-        res.redirect('/products/list');
+        fs.writeFileSync(__dirname + '/../database/products.json', productsJSON); */
+
+
     },
 
     edit: (req, res) => {
         let idProduct = req.params.id;
-        console.log(idProduct);
-        let productFound;
 
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].id == idProduct) {
-                console.log(products[i].id);
-                console.log(idProduct);
-                productFound = products[i];
-                break;
-            }
-        }
-
-        if (productFound) {
-            res.render('products/editProduct', { productFound });
-        } else {
-            res.send('Producto no encontrado');
-        }
-
-        console.log(productFound);
+        db.Products.findOne({
+                where: {
+                    id: idProduct,
+                }
+            })
+            .then(function(productFound) {
+                return res.render('products/editProduct', { productFound, req });
+            })
     },
 
     update: (req, res) => {
-        let idProduct = req.params.id;
+        /* let errors = validationResult(req);
 
-        let editProduct = products.map(function(product) {
-            if (product.id == idProduct) {
-                let productEdit = req.body;
-                productEdit.id = idProduct;
-                console.log(productEdit);
-                return productEdit;
-            }
-            return product;
-        });
-        editProductJSON = JSON.stringify(editProduct);
-        fs.writeFileSync(__dirname + '/../database/products.json', editProductJSON);
-        res.send('Producto editado');
+        if (errors.isEmpty()) { */
+        let idProduct = req.params.id;
+        let editProduct = {};
+        editProduct.name = req.body.name;
+        editProduct.price = req.body.price;
+        editProduct.category_id = req.body.cat;
+        editProduct.description = req.body.desc;
+        editProduct.image = req.files[0].filename;
+
+
+        db.Products.update(editProduct, {
+                where: {
+                    id: idProduct,
+                }
+            }).then(function(producto) {
+                return res.redirect('/products/list');
+            })
+            /* } else {
+                let idProduct = req.params.id;
+
+                db.Products.findOne({
+                        where: {
+                            id: idProduct,
+                        }
+                    })
+                    .then(function(productFound) {
+                        return res.render('products/editProduct', { errors: errors.errors, req, productFound });
+                    })
+
+
+            } */
     },
 
     delete: (req, res) => {
         let idProduct = req.params.id;
-        console.log(idProduct);
 
-        let deleteProduct = products.filter(function(product) {
-            return product.id != idProduct;
-        });
-
-        console.log(deleteProduct);
-
-        deleteProductJSON = JSON.stringify(deleteProduct);
-        fs.writeFileSync(__dirname + '/../database/products.json', deleteProductJSON);
-        console.log(deleteProductJSON);
-        res.send('producto eliminado');
+        db.Products.destroy({
+                where: {
+                    id: idProduct,
+                }
+            })
+            .then(function(x) {
+                if (x) {
+                    res.redirect('/products/list');
+                }
+            })
     },
 
 };

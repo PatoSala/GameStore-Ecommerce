@@ -30,6 +30,8 @@ body {
 }
 
 .mainProducts .box .topImg {
+    display: flex;
+    align-items: center;
     height: 250px;
     background-color: tomato;
     border-top-left-radius: 10px;

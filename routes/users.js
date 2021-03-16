@@ -15,21 +15,21 @@ router.get('/list', authMiddlewere, opMiddlewere, usersController.list);
 /* create */
 router.get('/register', guestMiddlewere, usersController.create);
 router.post('/register', [
-  check('name').isLength( { min: 2 } ).withMessage('• El nombre debe tener al menos 2 caracteres'),
-  check('email').isLength().withMessage('• Email: campo obligatorio'),
-  check('email').isEmail().withMessage('• El formato de email no es correcto'),
-  /* body('email').custom(function(value) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].email == req.body.email) {
-            return false;
-        }
-      } 
-    }).withMessage('• Este email ya está en uso'), */
-  check('password').isLength( { min: 6 }).withMessage('• La contraseña debe ser de por lo menos 6 caracteres'),
-],usersController.store);
+    check('name').isLength({ min: 2 }).withMessage('• El nombre debe tener al menos 2 caracteres'),
+    check('email').isLength().withMessage('• Email: campo obligatorio'),
+    check('email').isEmail().withMessage('• El formato de email no es correcto'),
+    /* body('email').custom(function(value) {
+      for (let i = 0; i < users.length; i++) {
+          if (users[i].email == req.body.email) {
+              return false;
+          }
+        } 
+      }).withMessage('• Este email ya está en uso'), */
+    check('password').isLength({ min: 6 }).withMessage('• La contraseña debe ser de por lo menos 6 caracteres'),
+], usersController.store);
 
 /* edit */
-router.get('/edit/:id', authMiddlewere,usersController.edit);
+router.get('/edit/:id', authMiddlewere, usersController.edit);
 router.post('/edit/:id', usersController.update);
 
 /* delete */
@@ -38,8 +38,8 @@ router.post('/delete/:id', usersController.delete);
 /* login */
 router.get('/login', guestMiddlewere, usersController.loginForm);
 router.post('/login', [
-  check('email').isLength(),
-  check('password').isLength(),
+    check('email').isLength({ min: 3 }).withMessage('• Email: campo obligatorio'),
+    check('password').isLength({ min: 6 }).withMessage('• La contraseña debe ser de por lo menos 6 caracteres'),
 ], usersController.login);
 
 /* logOut */
@@ -50,14 +50,14 @@ router.get('/cart/:id', authMiddlewere, usersController.cart);
 
 /* check */
 router.get('/check', (req, res) => {
-  if (req.session.userLogged != undefined) {
-    res.send('El usuario ' + req.session.userLogged.name + ' está logueado');
-  } else {
-    res.send('nadie inició sesión')
-  }
+    if (req.session.userLogged != undefined) {
+        res.send('El usuario ' + req.session.userLogged.name + ' está logueado');
+    } else {
+        res.send('nadie inició sesión')
+    }
 });
 
 /* perfil */
-router.get('/:id', authMiddlewere,usersController.show);
+router.get('/:id', authMiddlewere, usersController.show);
 
 module.exports = router;

@@ -15,41 +15,46 @@
 
         <div class="product-index">
             <div class="filter">
-                <p style="margin: 0%;">Filtrar por Categorías</p>
-                <p class="Juegos">Juegos</p>
-                <p class="Desktop">Desktop</p>
-                <p class="Periféricos">Periféricos</p>
-                <p class="Laptops">Laptops</p>
-                <p class="Componentes">Componentes</p>
+                <p style="margin: 0;">Filtrar por Categorías</p>
+                <a href="/products/index/3">Juegos</a>
+                <a href="/products/index/6">Desktop</a>
+                <a href="/products/index/1">Periféricos</a>
+                <a href="/products/index/7">Laptops</a>
+                <a href="/products/index/8">Componentes</a>
             </div>
 
             <div class="cat">
-                <a href="">Juegos</a>
-                <a href="">PCs de Escritorio</a>
-                <a href="">Periféricos</a>
-                <a href="">Laptops</a>
-                <a href="">Componentes</a>
+                <a href="/products/index/3">Juegos</a>
+                <a href="/products/index/6">PCs de Escritorio</a>
+                <a href="/products/index/1">Periféricos</a>
+                <a href="/products/index/7">Laptops</a>
+                <a href="/products/index/8">Componentes</a>
             </div>
 
             <div class="mainProducts">
                 <ul>
                     <% for (let i = 0; i < products.length; i++) { %>
                         <% console.log(i) %>
-                        <li>
-                            <div class="box" id="<%= products[i].cat %>">
-                                <div class="topImg">
-                                    <img src="/../../../tmp/my-uploads/<%= products[i].img %>">
-                                </div>
-                                <div class="preview">
-                                    <%= products[i].name %>
-                                        <br>
-                                        <p class="price">$
-                                            <%= products[i].price %>
-                                        </p>
-                                </div>
-                            </div>
-                        </li>
-                        <% } %>
+                            <% console.log(products) %>
+                                <li>
+                                    <div class="box" id="<%= products[i].cat %>">
+                                        <div class="topImg">
+                                            <img src="/images/products/<%= products[i].image %>">
+                                        </div>
+
+                                        <div class="preview">
+                                            <%= products[i].name %>
+                                                <br>
+                                                <p class="price">$
+                                                    <%= products[i].price %>
+                                                </p>
+                                                <form method="GET" action="/products/show/<%= products[i].id %>">
+                                                    <button type="submit">Ver</button>
+                                                </form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <% } %>
                 </ul>
             </div>
 
@@ -59,63 +64,38 @@
 
         <%- include ../partials/footer %>
 
-    <script>
-        const catSlide = () => {
-            const filter = document.querySelector("div.filter");
-            const categories = document.querySelector("div.cat");
-            let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            <script>
+                const catSlide = () => {
+                    const filter = document.querySelector("div.filter");
+                    const categories = document.querySelector("div.cat");
+                    let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 
-            let count = 0;
-            console.log(count);
-            filter.addEventListener("click", () => {
-                
-                if (count == 0 && viewportWidth <= 768) {
-                    categories.style.display = "flex";
-                    count = 1;
-                } else {
-                    categories.style.display = "none";
-                    count = 0;
+                    let count = 0;
+                    console.log(count);
+                    filter.addEventListener("click", () => {
+
+                        if (count == 0 && viewportWidth <= 768) {
+                            categories.style.display = "flex";
+                            count = 1;
+                        } else {
+                            categories.style.display = "none";
+                            count = 0;
+                        }
+                    });
+
+
                 }
-            });
 
-            
-        }
+                catSlide();
 
-        catSlide();
+                //footer fix
 
-        //footer fix
+                const footer = document.querySelector("footer");
 
-        const footer = document.querySelector("footer");
+                footer.style.position = "unset";
 
-        footer.style.position = "unset";
-
-        //
-
-        let Juegos = document.querySelector("p.Juegos");
-        let Desktop = document.querySelector("p.Desktop");
-        let Periféricos = document.querySelector("p.Periféricos");
-        let Laptops = document.querySelector("p.Laptops");
-        let Componentes = document.querySelector("p.Componentes");
-
-        let catJuegos = document.querySelector("#Juegos");
-        let catDesktop = document.querySelector("#Desktop");
-        let catPeriféricos = document.querySelector("#Periféricos");
-        let catLaptops = document.querySelector("#Laptops");
-        let catComponentes = document.querySelector("#Componentes");
-        catComponentes.style.display = "none";
-        catJuegos.style.display = "none";
-        catLaptops.style.display = "none";
-        catDesktop.style.display = "none";
-        catPeriféricos.style.display = "none";
-
-        Juegos.addEventListener("click", function() {
-            catDesktop.style.display = "none";
-            catPeriféricos.style.display = "none";
-            catLaptops.style.display = "none";
-            catComponentes.style.display = "none";
-        });
-
-    </script>
+                //
+            </script>
 </body>
 
 </html>

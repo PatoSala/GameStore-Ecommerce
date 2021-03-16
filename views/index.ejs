@@ -37,8 +37,6 @@
                 height: 300px;
             }
         }
-
-
     </style>
 
     <script>
@@ -82,10 +80,11 @@
         <div class="mainProducts">
             <ul>
                 <% for (let i=0; i < products.length; i++) { %>
+
                     <li>
                         <div class="box">
                             <div class="topImg">
-                                <img src="/tmp/my-uploads/<%= products[i].img %>" style='height: 100%; width: 100%; object-fit: contain'>
+                                <img src="/images/products/<%= products[i].image %>" style='height: 100%; width: 100%; object-fit: contain'>
                             </div>
                             <div class="preview">
                                 <%= products[i].name %>
@@ -93,9 +92,13 @@
                                     <p class="price">$
                                         <%= products[i].price %>
                                     </p>
+                                    <form method="GET" action="/products/show/<%= products[i].id %>">
+                                        <button type="submit">Ver</button>
+                                    </form>
                             </div>
                         </div>
                     </li>
+
                     <% } %>
             </ul>
         </div>

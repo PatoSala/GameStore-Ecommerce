@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <title>Edit Product</title>
 </head>
+
 <body>
-    <h1>Editar producto: <%= productFound.name %></h1>
+    <%- include ../partials/header %>
+        <div class="edit-product">
+            <h1>Editar producto:
+                <%= productFound.name %>
+            </h1>
 
-    <form action="/products/edit/<%= productFound.id %>" method="POST">
-        <input type="text" name="name" placeholder="Nombre del producto" value="<%= productFound.name %>">
-        <br>
-        <input type="text" name="price" placeholder="$$$" value="<%= productFound.price %>">
-        <br>
-        <input type="text" name="cat" placeholder="Categoría" value="<%= productFound.cat %>">
-        <br>
-        <input type="text" name="desc" placeholder="Decripción del producto" value="<%= productFound.desc %>">
-        <br>
-        <button type="submit">Aplicar Cambios</button>
-    </form>
+            <% if (typeof errors != 'undefined') { %>
+                <div class="errors">
+                    <ul>
+                        <% for (let i = 0; i < errors.length; i++) { %>
+                            <li>
+                                <p>
+                                    <%= errors[i].msg%>
+                                </p>
+                            </li>
+                            <% } %>
+                    </ul>
+                </div>
+                <% } %>
 
-    <%- include ../partials/footer %>
+                    <form action="/products/edit/<%= productFound.id %>" method="POST" enctype="multipart/form-data">
+                        <input type="text" name="name" placeholder="Nombre del producto" value="<%= productFound.name %>">
+                        <br>
+                        <input type="file" name="img" class="img" value="<%= productFound.image %>">
+                        <br>
+                        <input type="text" name="price" placeholder="$$$" value="<%= productFound.price %>">
+                        <br>
+                        <div class="radio" style="margin: 0%;">
+                            <input type="radio" name="cat" placeholder="Categoría" value="3" class="cat"> Juegos
+                            <input type="radio" name="cat" placeholder="Categoría" value="6" class="cat"> Desktop
+                            <input type="radio" name="cat" placeholder="Categoría" value="1" class="cat"> Periféricos
+                            <input type="radio" name="cat" placeholder="Categoría" value="7" class="cat"> Laptops
+                            <input type="radio" name="cat" placeholder="Categoría" value="8" class="cat"> Componentes
+                        </div>
+                        <br>
+                        <input type="text" name="desc" placeholder="Decripción del producto" value="<%= productFound.description %>">
+                        <br>
+                        <button type="submit">Aplicar Cambios</button>
+                    </form>
+
+                    <%- include ../partials/footer %>
+        </div>
 
 </body>
+
 </html>

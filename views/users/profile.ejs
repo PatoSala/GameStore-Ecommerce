@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,36 +23,44 @@
     </script>
     <title>Tu Perfil</title>
 </head>
+
 <body>
 
     <%- include ../partials/header %>
 
 
-    <div class="profile">
-        <h1>¡Hola <%= req.session.userLogged.name %>!</h1>
-        <br>
-        <form action="/users/logout" method="POST">
-            <button type="submit" class="logOut">Log Out</button>
-        </form>
-        <form action="/users/cart/<%= req.session.userLogged.id %>" method="GET">
-            <button type="submit">Carrito</button>
-        </form>
-
-        <% if (req.session.userLogged.op == 1) { %>
-            <form action="/products/create" method="GET">
-                <button type="submit">Publicar</button>
+        <div class="profile">
+            <h1>¡Hola
+                <%= req.session.userLogged.name %>!</h1>
+            <br>
+            <form action="/users/logout" method="POST">
+                <button type="submit" class="logOut">Log Out</button>
             </form>
-            <form action="/users/list" method="GET">
-                <button type="submit">Listado de usuarios</button>
+            <form action="/users/cart/<%= req.session.userLogged.id %>" method="GET">
+                <button type="submit">Carrito</button>
             </form>
-            <form action="/products/list" method="GET">
-                <button type="submit">Listado de productos</button>
+            <form action="/users/edit/<%= req.session.userLogged.id %>" method="GET">
+                <button type="submit">Editar Perfil</button>
             </form>
-        <% } %>
 
-    </div>
+            <% if (req.session.userLogged.op == 1) { %>
+                <form action="/products/create" method="GET">
+                    <button type="submit">Publicar</button>
+                </form>
+                <form action="/users/list" method="GET">
+                    <button type="submit">Listado de usuarios</button>
+                </form>
+                <form action="/products/list" method="GET">
+                    <button type="submit">Listado de productos</button>
+                </form>
+                <% } %>
 
-    <%- include ../partials/footer %>
+                    <%- include ../partials/footer %>
+
+        </div>
+
+
 
 </body>
+
 </html>

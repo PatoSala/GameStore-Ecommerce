@@ -1,0 +1,53 @@
+.carrito {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carrito div.cartBox {
+    width: 90vw;
+    height: 200px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    background: #c5c5c5;
+}
+
+.cartBox img {
+    width: 200px;
+    height: 190px;
+    margin: 0px 15px 0px 15px;
+}
+
+.carrito form.delete-from-cart button {
+    width: 50px;
+    height: 60px;
+}
+
+.carrito .total-amount {
+    width: 90vw;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrito .total-amount p {
+    font-size: 24px;
+}
+
+.total-amount form button {
+    margin: 0px 15px 0px 15px;
+    width: 100px;
+    height: 40px;
+    background: #1c4bcc;
+    border-width: 0px;
+    border-radius: 3px;
+    border-style: solid;
+    color: white;
+}
+
+.total-amount form button:hover {
+    background: #0833aa;
+}
